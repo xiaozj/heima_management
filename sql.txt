@@ -1,0 +1,143 @@
+# heima_management
+
+CREATE TABLE `member` (
+  `id` bigint(50) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(20) DEFAULT NULL,
+  `nickname` varchar(20) DEFAULT NULL,
+  `phoneNum` varchar(20) DEFAULT NULL,
+  `email` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+
+
+
+CREATE TABLE `order_traveller` (
+  `orderId` int(11) NOT NULL,
+  `travellerId` int(11) NOT NULL,
+  PRIMARY KEY (`orderId`,`travellerId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `orderNum` varchar(20) NOT NULL,
+  `orderTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `peopleCount` int(11) DEFAULT NULL,
+  `orderDesc` varchar(500) DEFAULT NULL,
+  `payType` int(11) DEFAULT NULL,
+  `orderStatus` int(11) DEFAULT NULL,
+  `productId` int(11) DEFAULT NULL,
+  `memberId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `orderNum` (`orderNum`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8
+
+
+
+
+CREATE TABLE `permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `permissionName` varchar(50) DEFAULT NULL,
+  `url` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8
+
+
+
+
+
+
+Create Table
+
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `productNum` varchar(50) NOT NULL,
+  `productName` varchar(50) DEFAULT NULL,
+  `cityName` varchar(50) DEFAULT NULL,
+  `DepartureTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `productPrice` int(11) DEFAULT NULL,
+  `productDesc` varchar(500) DEFAULT NULL,
+  `productStatus` int(24) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `productNum` (`productNum`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8
+
+
+
+
+
+
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `roleName` varchar(50) DEFAULT NULL,
+  `roleDesc` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2223 DEFAULT CHARSET=utf8
+
+
+
+
+CREATE TABLE `role_permission` (
+  `permissionId` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
+  PRIMARY KEY (`permissionId`,`roleId`),
+  KEY `roleId` (`roleId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
+
+
+CREATE TABLE `syslog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `visitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `username` varchar(50) DEFAULT NULL,
+  `ip` varchar(30) DEFAULT NULL,
+  `url` varchar(50) DEFAULT NULL,
+  `executionTime` int(11) DEFAULT NULL,
+  `method` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8
+
+
+
+
+
+CREATE TABLE `traveller` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(20) DEFAULT NULL,
+  `sex` varchar(20) DEFAULT NULL,
+  `phoneNum` varchar(20) DEFAULT NULL,
+  `credentialsType` int(11) DEFAULT NULL,
+  `credentialsNum` varchar(50) DEFAULT NULL,
+  `travellerType` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+
+
+
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(50) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `PASSWORD` varchar(400) DEFAULT NULL,
+  `phoneNum` varchar(20) DEFAULT NULL,
+  `STATUS` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8
+
+
+
+
+
+CREATE TABLE `users_role` (
+  `userId` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
+  PRIMARY KEY (`userId`,`roleId`),
+  KEY `roleId` (`roleId`),
+  CONSTRAINT `users_role_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
+  CONSTRAINT `users_role_ibfk_2` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
